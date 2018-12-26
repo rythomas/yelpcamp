@@ -17,10 +17,10 @@ var commentRoutes    = require("./routes/comments"),
     indexRoutes      = require("./routes/index");
 
 var url = process.env.DATABASEURL  || ("mongodb://localhost:27107/yelp_camp", {useNewUrlParser: true});
-mongoose.connect(url);
+mongoose.connect(url, {useNewUrlParser: true});
     
 //mongoose.connect("mongodb://user:password1@ds141924.mlab.com:41924/yelpcamp", {useNewUrlParser: true});
-console.log(process.env.DATABASEURL);
+console.log(url);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
