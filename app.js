@@ -20,7 +20,7 @@ var url = process.env.DATABASEURL  || ("mongodb://localhost:27107/yelp_camp", {u
 mongoose.connect(url, {useNewUrlParser: true});
     
 //mongoose.connect("mongodb://user:password1@ds141924.mlab.com:41924/yelpcamp", {useNewUrlParser: true});
-console.log(url);
+//console.log(url);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
