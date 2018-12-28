@@ -13,6 +13,11 @@
     
     
     <div class="row text-center" style="display: flex; flex-wrap: wrap">
+        <div class="col-sm-12">
+            <% if(noMatch !== null){ %>
+                <h3><%= noMatch %> </h3>
+            <% } %>
+        </div>
         <% campgrounds.forEach(function(campground){ %>
         <div class="col-md-3  col-xs-12">
             <div class="thumbnail">
