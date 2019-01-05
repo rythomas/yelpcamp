@@ -13,5 +13,7 @@
 .delete-form{
     display: inline;
 }
-
+.fa-star.checked{
+    color: #FFDF00;
+}
 
