@@ -1,6 +1,7 @@
 var Campground = require("../models/campground");
 var Comment    = require("../models/comment");
-var Review = require("../models/review");
+var Review     = require("../models/review");
+var User       = require("../models/user");
 //all middleware goes here
 var middlewareObj = {};
 
@@ -52,6 +53,27 @@ middlewareObj.isLoggedIn = function(req,res,next){
     }
     req.flash("error", "You need to be logged in to do that");
     res.redirect("/login");
+};
+
+middlewareObj.checkUserOwnership = function(req,res,next){
+    if(req.isAuthenticated()){
+        User.findById(req.params.id, function(err, foundUser){
+            if(err){
+                req.flash("error", "Something went wrong");
+                res.redirect("back");
+            } else {
+                //does user match profile
+                if(foundUser.id == req.user._id){
+                    next();
+                } else {
+                    req.flash("error", "You don't have permission to do that");
+                    res.redirect("back");
+                }
+            }
+        });
+    } else {
+        res.redirect("back");
+    }
 };
 
 middlewareObj.checkReviewOwnership = function(req, res, next) {

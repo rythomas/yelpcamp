@@ -15,6 +15,7 @@ require('dotenv').config();
 var commentRoutes    = require("./routes/comments"),
     reviewRoutes     = require("./routes/reviews"),
     campgroundRoutes = require("./routes/campgrounds"),
+    userRoutes       = require("./routes/users"),
     indexRoutes      = require("./routes/index");
 
 var url = process.env.DATABASEURL  || ("mongodb://localhost:27107/yelp_camp", {useNewUrlParser: true});
@@ -50,6 +51,7 @@ app.use(indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
+app.use("/users", userRoutes);
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("YelpCamp server has started");

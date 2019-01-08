@@ -108,7 +108,6 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req,res){
             console.log(err);
         } else {
             res.render("campgrounds/edit", {campground: foundCampground});
-    
         }
         });
    

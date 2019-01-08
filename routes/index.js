@@ -64,22 +64,6 @@ router.get("/logout", function(req,res){
     res.redirect("/campgrounds");
 });
 
-//User Profiles
-router.get("/users/:id", function(req,res){
-  User.findById(req.params.id, function(err, foundUser){
-    if(err){
-      req.flash("error", "Something went wrong.");
-      res.redirect("/campgrounds");
-    }
-    Campground.find().where('author.id').equals(foundUser._id).exec(function(err, campgrounds){
-      if(err){
-      req.flash("error", "Something went wrong.");
-      res.redirect("/campgrounds");
-    }
-     res.render("users/show", {user: foundUser, campgrounds: campgrounds});
-    });
-  });
-});
 
 //Forgot password
 router.get('/forgot', function(req,res){
@@ -149,6 +133,8 @@ router.get('/reset/:token', function(req, res) {
   });
 });
 
+
+
 router.post('/reset/:token', function(req, res) {
   async.waterfall([
     function(done) {
@@ -199,21 +185,5 @@ router.post('/reset/:token', function(req, res) {
   });
 });
 
-// USER PROFILE
-router.get("/users/:id", function(req, res) {
-  User.findById(req.params.id, function(err, foundUser) {
-    if(err) {
-      req.flash("error", "Something went wrong.");
-      res.redirect("/");
-    }
-    Campground.find().where('author.id').equals(foundUser._id).exec(function(err, campgrounds) {
-      if(err) {
-        req.flash("error", "Something went wrong.");
-        res.redirect("/");
-      }
-      res.render("users/show", {user: foundUser, campgrounds: campgrounds});
-    })
-  });
-});
 
 module.exports = router;
