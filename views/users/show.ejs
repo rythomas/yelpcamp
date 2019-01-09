@@ -5,12 +5,15 @@
 		<div class="thumbnail">
 			<img src="<%= user.avatar %>" alt="user profile image">
 		</div>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quasi similique architecto ad modi sunt quaerat possimus, officiis quos. Voluptatibus repellendus exercitationem, id saepe sunt consectetur non quam sapiente assumenda.
-
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quasi similique architecto ad modi sunt quaerat possimus, officiis quos. Voluptatibus repellendus exercitationem, id saepe sunt consectetur non quam sapiente assumenda.
+		<%if(user.description == null) { %>
+			Tell us a bit about yourself
+		<% } else { %>
+			<%=user.description %>
+		<% } %>
+	<br>
 	<br>
 	<% if(currentUser && (user.id == currentUser._id)){ %>
-       <a class="btn btn-xs btn-warning" href="<%= user._id %>/edit">Edit</a>
+       <a class="btn btn-xs btn-warning" href="<%= user._id %>/edit">Edit Profile</a>
 	<% } %>
 		<h3><%= user.username %>'s campgrounds:</h3>
 		<ul>

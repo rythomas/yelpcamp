@@ -17,6 +17,14 @@
                 <input class="form-control" type="text" name="user[avatar]" value= <%=user.avatar%>>
             </div>
             <div class="form-group">
+                <input class="form-control" type="textarea" name="user[description]" 
+                <% if(user.description = null) { %>
+                    value = ""
+                <% } else { %>
+                value= <%=user.description%>
+                 <% } %>>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-lg btn-primary btn-block">Update</button>
             </div>
         </form>
