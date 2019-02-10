@@ -115,15 +115,15 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req,res){
 
 //Update
 router.put("/:id", upload.single('image'), function(req, res){
-    Campground.findById(req.params.id, function(err, campground){
+    Campground.findById(req.params.id, async function(err, campground){
         if(err){
             req.flash("error", err.message);
             res.redirect("back");
         } else {
             if (req.file) {
               try {
-                  cloudinary.v2.uploader.destroy(campground.imageId);
-                  var result = cloudinary.v2.uploader.upload(req.file.path);
+                  await cloudinary.v2.uploader.destroy(campground.imageId);
+                  var result = await cloudinary.v2.uploader.upload(req.file.path);
                   campground.imageId = result.public_id;
                   campground.image = result.secure_url;
               } catch(err) {
@@ -131,9 +131,8 @@ router.put("/:id", upload.single('image'), function(req, res){
                   return res.redirect("back");
               }
             }
-            campground.name = req.body.name;
-            campground.description = req.body.description;
-            
+            campground.name = req.body.name ? req.body.name : campground.name;
+            campground.description = req.body.description ? req.body.description: campground.description;
             campground.save();
             req.flash("success","Successfully Updated!");
             res.redirect("/campgrounds/" + campground._id);
@@ -143,7 +142,7 @@ router.put("/:id", upload.single('image'), function(req, res){
 
 //Destroy Campground Route
 router.delete('/:id', middleware.checkCampgroundOwnership, function(req, res) {
-  Campground.findById(req.params.id, function(err, campground) {
+  Campground.findById(req.params.id, async function(err, campground) {
     if(err) {
       req.flash("error", err.message);
       return res.redirect("back");
@@ -155,13 +154,13 @@ router.delete('/:id', middleware.checkCampgroundOwnership, function(req, res) {
                 return res.redirect("/campgrounds");
             }
             // deletes all reviews associated with the campground
-            Review.remove({"_id": {$in: campground.reviews}}, function (err) {
+            Review.remove({"_id": {$in: campground.reviews}},  async function (err) {
                 if (err) {
                     console.log(err);
                     return res.redirect("/campgrounds");
                 }
                 try {
-                    cloudinary.v2.uploader.destroy(campground.imageId);
+                    await cloudinary.v2.uploader.destroy(campground.imageId);
                     campground.remove();
                     req.flash('success', 'Campground deleted successfully!');
                     res.redirect('/campgrounds');
