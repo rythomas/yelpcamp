@@ -115,7 +115,7 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req,res){
 
 //Update
 router.put("/:id", upload.single('image'), function(req, res){
-    Campground.findById(req.params.id, async function(err, campground){
+    Campground.findById(req.params.id,  async function(err, campground){
         if(err){
             req.flash("error", err.message);
             res.redirect("back");
@@ -131,8 +131,9 @@ router.put("/:id", upload.single('image'), function(req, res){
                   return res.redirect("back");
               }
             }
-            campground.name = req.body.name ? req.body.name : campground.name;
-            campground.description = req.body.description ? req.body.description: campground.description;
+            campground.name = req.body.campground.name;
+            campground.description = req.body.campground.description;
+            campground.price = req.body.campground.price;
             campground.save();
             req.flash("success","Successfully Updated!");
             res.redirect("/campgrounds/" + campground._id);
