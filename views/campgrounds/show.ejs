@@ -20,7 +20,7 @@
                     <p>
                         <em>Submitted By: <a href="/users/<%=campground.author.id %>"><%= campground.author.username %></a></em>
                     </p>
-                    <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+                    <% if(currentUser && (campground.author.id.equals(currentUser._id) || currentUser.isAdmin)){ %>
                         <a class="btn btn-xs btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
                         <form id="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
                             <button class="btn btn-xs btn-danger">Delete</button>
@@ -64,7 +64,7 @@
                             <p style="text-align: justify; word-wrap: break-word;">
                                 <%= review.text %>
                             </p>
-                            <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+                            <% if(currentUser && (review.author.id.equals(currentUser._id) || currentUser.isAdmin)){ %>
                             <a class="btn btn-xs btn-warning"
                                href="/campgrounds/<%=campground._id %>/reviews/<%=review._id %>/edit">Edit</a>
                             <form id="delete-form" action="/campgrounds/<%=campground._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
@@ -100,7 +100,7 @@
                             <p>
                                 <%= comment.text %>
                             </p>
-                        <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                        <% if(currentUser && (comment.author.id.equals(currentUser._id) || currentUser.isAdmin)){ %>
                             <a class="btn btn-xs btn-warning"
                                href="/campgrounds/<%=campground._id %>/comments/<%=comment._id %>/edit">Edit</a>
                             <form id="delete-form" action="/campgrounds/<%=campground._id %>/comments/<%=comment._id %>?_method=DELETE" method="POST">
